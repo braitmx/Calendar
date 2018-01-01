@@ -25,7 +25,7 @@
         <!--Select Dates -->
 
         <!--Calendar -->
-        <div class="calendar">
+        <div class="calendar" v-show="visible">
             <div class="calendar__head">
                 <div class="calendar__head-row">
                     <div class="calendar__head-col"></div>
@@ -37,57 +37,11 @@
 
                 </div>
             </div>
-            <div class="calendar__body">
-                <div class="calendar__body-row">
-                    <div class="calendar__body-col">
-                        <div class="calendar__body-time">00:00</div>
-                    </div>
-                    <div class="calendar__body-col">
-                        <div class="calendar__event calendar__event--green">Two birthdays</div>
-                        <div class="calendar__event calendar__event--green">Meet friends</div>
-                    </div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col">
-                        <div class="calendar__event">Trip to LA</div>
-                    </div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                </div>
 
-                <div class="calendar__body-row">
-                    <div class="calendar__body-col">
-                        <div class="calendar__body-time">04:00</div>
-                    </div>
-                    <div class="calendar__body-col">
-                        <div class="calendar__event calendar__event--orange">Sam birthday</div>
-                    </div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col">
-                        <div class="calendar__event">Book Too Good at Goodbyes</div>
-                    </div>
-                    <div class="calendar__body-col"></div>
-                </div>
-
-                <div class="calendar__body-row">
-                    <div class="calendar__body-col">
-                        <div class="calendar__body-time">08:00</div>
-                    </div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                    <div class="calendar__body-col"></div>
-                </div>
-
-            </div>
+            <TaskList></TaskList>    
+            
         </div>
+        <!--Calendar -->
 
         <router-link to="/add-task">
             <button type="button">Add new task</button>
@@ -97,14 +51,15 @@
             <div v-for="task in data.tasks">{{task}}</div>
         </div>
 
-        <!--Calendar -->
     </div>
 </template>
 
 <script>
+
     import Firebase from 'firebase'
     import { monthsData } from '../helpers/date'
     import { daysData } from '../helpers/date'
+    import TaskList from './TaskList.vue'
 
 
     export default {
@@ -116,6 +71,7 @@
                 curMonth: null,
                 dateInterval: null,
                 daysNumber: 0,
+                visible: false,
 
                 renderHead: {
                     date: [],
@@ -129,11 +85,14 @@
                 }
             }
         },
+        components: {
+            TaskList
+        },
 
         props: ['uid'],
 
         methods: {
-           
+
             dateChange: function () {
 
                 function empty(el) {
@@ -141,6 +100,8 @@
 
                     return el;
                 }
+
+                if (!this.visible) this.visible = true;
 
                 this.renderHead.day = empty(this.renderHead.day);
 
