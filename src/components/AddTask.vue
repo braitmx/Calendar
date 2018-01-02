@@ -31,9 +31,8 @@
                 <option value="Learning">Learning</option>
             </select>
         <br /><br />
-        <router-link to="/calendar">
+
             <button @click.prevent="addTask">add</button>
-        </router-link>
     </form>
 </template>
 
@@ -84,6 +83,8 @@
                     if (key === 'period') this.task[key] = [];
                     else this.task[key] = '';
                 }
+
+                this.$store.commit('changeVisibility');
             }
         },
         created() {

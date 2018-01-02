@@ -38,14 +38,14 @@
                 </div>
             </div>
 
-            <TaskList></TaskList>    
-            
+            <CalendarBody></CalendarBody>
+
         </div>
         <!--Calendar -->
 
-        <router-link to="/add-task">
-            <button type="button">Add new task</button>
-        </router-link>
+        <button type="button" @click.prevent="showAddTaskForm">Add new task</button>
+
+        <AddTask v-show="taskFormShow"></AddTask>
 
         <div class="showTasks">
             <div v-for="task in data.tasks">{{task}}</div>
@@ -59,7 +59,8 @@
     import Firebase from 'firebase'
     import { monthsData } from '../helpers/date'
     import { daysData } from '../helpers/date'
-    import TaskList from './TaskList.vue'
+    import CalendarBody from './CalendarBody.vue'
+    import AddTask from './AddTask.vue'
 
 
     export default {
@@ -85,8 +86,14 @@
                 }
             }
         },
+        computed: {
+            taskFormShow() {
+                return this.$store.state.taskFormShow;
+            }
+        },
         components: {
-            TaskList
+            CalendarBody,
+            AddTask
         },
 
         props: ['uid'],
@@ -140,10 +147,16 @@
                         }
                     }
                 }
+            },
+
+            showAddTaskForm: function () {
+                if (!this.taskFormShow) this.$store.commit('changeVisibility');
             }
         },
 
         created() {
+
+            this.$store.commit('genegateSlots'); 
 
             const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
 
@@ -223,36 +236,6 @@ input {
 
 .calendar__event--orange {
     background-color: #f05722;
-}
-
-.calendar__body {
-    width: 100%;
-    height: 600px;
-}
-
-.calendar__body-row {
-    width: 100%;
-    height: 60px;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.calendar__body-col {
-    width: 13.5%;
-    height: inherit;
-    padding: 5px; 
-    background: lightblue;
-    border: 1px solid #f2f2f2;
-    box-sizing: border-box;
-}
-
-.calendar__body-row div:first-child:not(.calendar__event) {
-    width: 5.5%;
-    box-sizing: border-box;
-}
-
-.calendar__body-time {
-    color: #8d8d8d;
 }
 
 </style>
