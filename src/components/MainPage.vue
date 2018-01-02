@@ -219,23 +219,4 @@ input {
     font-size: 55px;
 }
 
-.calendar__event {
-    width: 95%;
-    display: inline-block;
-    background-color: #029ae4;
-    border-radius: 5px;
-    padding: 4px;
-    margin-bottom: 5px;
-    color: #fff;
-    box-sizing: border-box;
-}
-
-.calendar__event--green {
-    background-color: #33b679;
-}
-
-.calendar__event--orange {
-    background-color: #f05722;
-}
-
 </style>

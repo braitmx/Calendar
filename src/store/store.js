@@ -16,12 +16,14 @@ export const store = new Vuex.Store({
     mutations: {
 
         genegateSlots(state) {
+            // add slots to state
+
             let sTime = 0, index = 0, slot = [], slotsStor = [];
-            console.log('mutation done!');
+
             for (let i = 0; i <= 6; i++) {
 
                 for (let j = index; j < index + 6; j++) {
-                    slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: []});
+                    slot.push({ id: j, index: i, startTime: sTime, endTime: sTime + 4, tasks: [] });
 
                     sTime += 4;
                     sTime === 24 ? sTime = 0 : sTime;
@@ -34,15 +36,23 @@ export const store = new Vuex.Store({
                 slot = [];
             }
 
-            state.slots = slotsStor; // add slots to state
+            state.slots = slotsStor;
         },
 
         changeVisibility(state) {
             state.taskFormShow = !state.taskFormShow;
-        }
+        },
+
+        addNewTask(state, data) {
+            
+            state.slots[data.i].forEach(function(el) {
+                if (el.id === +data.id) el.tasks.push(data.task);
+            });
+
+        }   
     },
 
-    actions: {
-    }
+actions: {
+}
 
 });
