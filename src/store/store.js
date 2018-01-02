@@ -7,7 +7,8 @@ export const store = new Vuex.Store({
     state: {
         timeSlots: [0, 4, 8, 12, 16, 20],
         slots: [],
-        taskFormShow: false
+        taskFormShow: false,
+        newTask: {}
     },
 
     getters: {
@@ -23,7 +24,7 @@ export const store = new Vuex.Store({
             for (let i = 0; i <= 6; i++) {
 
                 for (let j = index; j < index + 6; j++) {
-                    slot.push({ id: j, index: i, startTime: sTime, endTime: sTime + 4, tasks: [] });
+                    slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: [] });
 
                     sTime += 4;
                     sTime === 24 ? sTime = 0 : sTime;
@@ -43,16 +44,26 @@ export const store = new Vuex.Store({
             state.taskFormShow = !state.taskFormShow;
         },
 
-        addNewTask(state, data) {
-            
-            state.slots[data.i].forEach(function(el) {
-                if (el.id === +data.id) el.tasks.push(data.task);
-            });
+        addNewTaskToStore(state, task) {
+            state.newTask = task;
+        },
 
-        }   
+        renderTask(state, data) {
+
+                state.slots[data.i].forEach(function (el) {
+                    if (el.id === +data.id) el.tasks.push(data.task);
+                });
+        }
     },
 
-actions: {
-}
+    actions: {
+        newTaskCreated({ commit, state }) {
+            return new Promise((resolve, reject) => {
+                if (state.newTask) {
+                    resolve(state.newTask);
+                }
+            });
+        }
+    }
 
 });

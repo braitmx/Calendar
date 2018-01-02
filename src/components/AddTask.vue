@@ -2,7 +2,7 @@
     <form class="add-task">
         <label for="desc">Description:</label>
         <br />
-        <textarea name="desc" id="desc" cols="30" rows="10" v-model="task.desc"></textarea>
+        <input type="text" v-model="task.desc">
         <br /><br />
         <label for="startTime">StartTime:</label>
         <input type="text" placeholder="example: 02.09 12:40" required v-model="task.startTime">
@@ -28,11 +28,10 @@
                 <option value="Home">Home</option>
                 <option value="Job">Job</option>
                 <option value="Rest">Rest</option>
-                <option value="Learning">Learning</option>
             </select>
         <br /><br />
 
-            <button @click.prevent="addTask">add</button>
+        <button @click.prevent="addTask">add</button>
     </form>
 </template>
 
@@ -48,11 +47,12 @@
                     endTime: '',
                     period: [],
                     category: ''
-                },
-
-                data: {
-                    tasks: []
                 }
+            }
+        },
+        computed: {
+            newTask() {
+                return this.$store.state.newTask;
             }
         },
 
@@ -60,6 +60,30 @@
 
         methods: {
             addTask: function () {
+
+                if (this.task.desc && this.task.startTime && this.task.endTime && this.task.period && this.task.category) {
+
+                    let cloneTask = {};
+
+                    for (let key in this.task) {
+                        cloneTask[key] = this.task[key];
+                    }
+
+                    this.$store.commit('addNewTaskToStore', cloneTask);
+
+                    //first > last
+
+                    for (let key in this.task) {
+
+                        if (key === 'period') this.task[key] = [];
+                        else this.task[key] = '';
+                    }
+                }
+            }
+        }
+
+        /*methods: {
+             addTask: function () {
 
                 if (this.task.desc && this.task.startTime && this.task.endTime && this.task.period && this.task.category) {
 
@@ -85,9 +109,9 @@
                 }
 
                 this.$store.commit('changeVisibility');
-            }
-        },
-        created() {
+            } 
+        },*/
+        /*created() {
 
             const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
 
@@ -101,7 +125,7 @@
                 }
 
             });
-        }
+        } */
     }
 </script>
 

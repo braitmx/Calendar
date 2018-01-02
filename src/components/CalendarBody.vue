@@ -5,10 +5,12 @@
                 <div class="calendar__time-col">
                     <div class="calendar__time" v-for="item in timeSlots">{{item}} - {{item + 4}}</div>
                 </div>
-                <div class="calendar__day-col" v-for="slot in slots">
-                    <div class="calendar__day" v-for="item in slot" v-bind:id="item.id" v-bind:data-index="item.index" @click.prevent="addTaskToSlot">
+                <div class="calendar__day-col" v-for="(slot, i) in slots"  v-bind:data-index="i">
+                    <div class="calendar__day" v-for="item in slot" v-bind:id="item.id" @click.prevent="addTaskToSlot">
                         {{item.startTime}}
-                        <div class="calendar__event" v-for="task in item.tasks" v-if="item.tasks">{{task.name}}</div>
+                        <div class="calendar__event" v-for="task in item.tasks" v-if="item.tasks">
+                            {{task.desc}}<br /> {{task.startTime}} - {{task.endTime}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -31,16 +33,15 @@
             addTaskToSlot: function (e) {
                 let data = {
                     id: e.target.id,
-                    i: e.target.dataset.index,
-                    task: {
-                        name: '1-st task',
-                        color: 'green',
-                        sTime: '08:00',
-                        eTiem: '09:00'
-                    }
-                }
-                
-                this.$store.commit('addNewTask', data);
+                    i: e.target.parentElement.dataset.index,
+                    task: {}
+                };
+
+                this.$store.dispatch('newTaskCreated').then((newTask) => {
+
+                    data.task = newTask;
+                    this.$store.commit('renderTask', data);
+                });
             }
         }
     }
