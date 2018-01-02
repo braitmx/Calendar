@@ -182,7 +182,7 @@ input {
 
 .calendar {
     width: 100%;
-    height: 700px;
+    height: 900px;
 }
 
 .calendar__head {

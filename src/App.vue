@@ -11,10 +11,6 @@
     </div>
 
     <div v-show="signComplete">
-      <router-link to="/calendar">
-        <button type="button">Calendar</button>
-      </router-link>
-
       <span>{{ email }}</span>
     </div>
 
