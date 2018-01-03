@@ -22,11 +22,17 @@
 <script>
     export default {
         computed: {
+            taskFormShow() {
+                return this.$store.state.taskFormShow;
+            },
             timeSlots() {
                 return this.$store.state.timeSlots;
             },
             slots() {
                 return this.$store.state.slots;
+            },
+            newTask() {
+                return this.$store.state.newTask;
             }
         },
         methods: {
@@ -37,14 +43,10 @@
                     task: {}
                 };
 
-                this.$store.dispatch('newTaskCreated').then((newTask) => {
+                this.$store.commit('addTaskElToStore', data);
 
-                    if (Object.keys(newTask).length != 0) {
+                if (!this.taskFormShow) this.$store.commit('changeVisibility');
 
-                        data.task = newTask;
-                        this.$store.commit('renderTask', data);
-                    }
-                });
             }
         }
     }

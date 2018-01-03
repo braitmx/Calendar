@@ -2,18 +2,18 @@
     <form class="add-task">
         <label for="desc">Description:</label>
         <br />
-        <input type="text" v-model="task.desc">
+        <input type="text" v-model="task.desc" required>
         <br /><br />
         <label for="startTime">StartTime:</label>
-        <input type="text" placeholder="example: 02.09 12:40" required v-model="task.startTime">
+        <input type="text" placeholder="example: 02.09 12:40" v-model="task.startTime" required>
         <br />
         <label for="endTime">EndTime:</label>
-        <input type="text" placeholder="example: 02.09 13:20" required v-model="task.endTime">
+        <input type="text" placeholder="example: 02.09 13:20" v-model="task.endTime" required>
         <br />
         <label for="period">Periodicity:</label>
         <br />
         <select name="period" multiple v-model="task.period">
-                <option value="">-</option>
+                <option value="" selected="selected">-</option>
                 <option value="Mon">Monday</option>
                 <option value="Tue">Tuesday</option>
                 <option value="Wed">Wednesday</option>
@@ -24,7 +24,7 @@
             </select>
         <br /><br />
         <label for="category">Category:</label>
-        <select name="category" v-model="task.category">
+        <select name="category" v-model="task.category" required>
                 <option value="Home">Home</option>
                 <option value="Job">Job</option>
                 <option value="Rest">Rest</option>
@@ -51,8 +51,11 @@
             }
         },
         computed: {
-            newTask() {
-                return this.$store.state.newTask;
+            taskFormShow() {
+                return this.$store.state.taskFormShow;
+            },
+            taskEl() {
+                return this.$store.state.taskEl;
             }
         },
 
@@ -69,7 +72,7 @@
                         cloneTask[key] = this.task[key];
                     }
 
-                    this.$store.commit('addNewTaskToStore', cloneTask);
+                    this.$store.commit('addTaskToEl', cloneTask);
 
                     //first > last
 
@@ -78,6 +81,10 @@
                         if (key === 'period') this.task[key] = [];
                         else this.task[key] = '';
                     }
+
+                    this.$store.commit('renderTask', this.taskEl);
+
+                    if (this.taskFormShow) this.$store.commit('changeVisibility');
                 }
             }
         }

@@ -43,8 +43,6 @@
         </div>
         <!--Calendar -->
 
-        <button type="button" @click.prevent="showAddTaskForm">Add new task</button>
-
         <AddTask v-show="taskFormShow"></AddTask>
 
         <div class="showTasks">
@@ -147,10 +145,6 @@
                         }
                     }
                 }
-            },
-
-            showAddTaskForm: function () {
-                if (!this.taskFormShow) this.$store.commit('changeVisibility');
             }
         },
 

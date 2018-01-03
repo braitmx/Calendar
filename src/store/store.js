@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
         timeSlots: [0, 4, 8, 12, 16, 20],
         slots: [],
         taskFormShow: false,
-        newTask: {}
+        taskEl: {}
     },
 
     getters: {
@@ -44,26 +44,23 @@ export const store = new Vuex.Store({
             state.taskFormShow = !state.taskFormShow;
         },
 
-        addNewTaskToStore(state, task) {
-            state.newTask = task;
+        addTaskElToStore(state, el) {
+            state.taskEl = el;
+        },
+
+        addTaskToEl(state, task) {
+            state.taskEl.task = task;
         },
 
         renderTask(state, data) {
-
-                state.slots[data.i].forEach(function (el) {
-                    if (el.id === +data.id) el.tasks.push(data.task);
-                });
+            
+            state.slots[data.i].forEach(function (el) {
+                if (el.id === +data.id) el.tasks.push(data.task);
+            });
         }
     },
 
     actions: {
-        newTaskCreated({ commit, state }) {
-            return new Promise((resolve, reject) => {
-                if (state.newTask) {
-                    resolve(state.newTask);
-                }
-            });
-        }
     }
 
 });
