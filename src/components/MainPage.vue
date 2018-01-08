@@ -8,7 +8,7 @@
             <label for="month">Month:</label>
             <br />
             <select name="month" v-model="curMonth">
-                <option v-for="month in mData" v-bind:value="month.id">{{month.name}}</option>
+                <option v-for="month in mData" :value="month.id" :key="month.id">{{month.name}}</option>
             </select>
             <br /><br />
             <label for="dateInterval">Select date interval:</label>
@@ -30,7 +30,7 @@
                 <div class="calendar__head-row">
                     <div class="calendar__head-col"></div>
 
-                    <div class="calendar__head-col" v-for="(date, i) in renderHead.date">
+                    <div class="calendar__head-col" v-for="(date, i) in renderHead.date" :key="i">
                         <div class="calendar__head-day">{{renderHead.day[i]}}</div>
                         <div class="calendar__head-date">{{date}}</div>
                     </div>
@@ -46,7 +46,7 @@
         <AddTask v-show="taskFormShow"></AddTask>
 
         <div class="showTasks">
-            <div v-for="task in data.tasks">{{task}}</div>
+            <div v-for="(task, i) in data.tasks" :key="i">{{task}}</div>
         </div>
 
     </div>
@@ -59,7 +59,6 @@
     import { daysData } from '../helpers/date'
     import CalendarBody from './CalendarBody.vue'
     import AddTask from './AddTask.vue'
-
 
     export default {
         data() {
@@ -85,6 +84,12 @@
             }
         },
         computed: {
+            curMonthInfo() {
+                return this.$store.state.curMonthInfo;
+            },
+            curSlot() {
+                return this.$store.state.curSlot;
+            },
             taskFormShow() {
                 return this.$store.state.taskFormShow;
             }
@@ -117,6 +122,11 @@
                         if (this.mData[i].id === +this.curMonth) {
                             this.firstDay = this.mData[i].firstDay;
                             this.daysNumber = this.mData[i].days;
+
+                            this.$store.commit('getMunthInfo', {
+                                month: this.mData[i].name,
+                                daysNumber: this.daysNumber
+                            });
                         }
                     }
 
@@ -145,12 +155,13 @@
                         }
                     }
                 }
+                this.$store.commit('getTimeInterval', this.dateInterval);
+                this.$store.commit('genegateSlots');
+                this.$store.commit('getCurSlot');
             }
         },
 
         created() {
-
-            this.$store.commit('genegateSlots'); 
 
             const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
 
@@ -169,48 +180,46 @@
 </script>
 
 <style scoped>
-
 input {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .calendar {
-    width: 100%;
-    height: 900px;
+  width: 100%;
+  height: 900px;
 }
 
 .calendar__head {
-    width: 100%;
-    height: 150px;
+  width: 100%;
+  height: 150px;
 }
 
 .calendar__head-row {
-    width: 100%;
-    height: inherit;
-    display: flex;
-    flex-wrap: wrap;
+  width: 100%;
+  height: inherit;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .calendar__head-col {
-    width: 13.5%;
-    height: inherit;
-    padding: 5px; 
-    background: lightblue;
-    border: 1px solid #f2f2f2;
-    box-sizing: border-box;
+  width: 13.5%;
+  height: inherit;
+  padding: 5px;
+  background: lightblue;
+  border: 1px solid #f2f2f2;
+  box-sizing: border-box;
 }
 
 .calendar__head-row div:first-child:not(.calendar__head-day) {
-    width: 5.5%;
-    box-sizing: border-box;
+  width: 5.5%;
+  box-sizing: border-box;
 }
 
 .calendar__head-day {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .calendar__head-date {
-    font-size: 55px;
+  font-size: 55px;
 }
-
 </style>

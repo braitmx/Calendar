@@ -3,12 +3,12 @@
         <div class="calendar__body">
             <div class="calendar__body-row">
                 <div class="calendar__time-col">
-                    <div class="calendar__time" v-for="item in timeSlots">{{item}} - {{item + 4}}</div>
+                    <div class="calendar__time" v-for="(item, i) in timeSlots" :key="i">{{item}} - {{item + 4}}</div>
                 </div>
-                <div class="calendar__day-col" v-for="(slot, i) in slots" v-bind:data-index="i">
-                    <div class="calendar__day" v-for="item in slot" v-bind:id="item.id" @click.prevent="addTaskToSlot">
+                <div class="calendar__day-col" v-for="(slot, i) in slots" v-if="curInterval != 29" :data-index="i" :key="i">
+                    <div class="calendar__day" v-for="item in slot" :id="item.id" @click.prevent="addTaskToSlot" :key="item.id">
                         {{item.startTime}}
-                        <div class="calendar__event" v-for="task in item.tasks" v-if="item.tasks">
+                        <div class="calendar__event" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
                             {{task.desc}}<br /> {{task.startTime}} - {{task.endTime}}
                         </div>
                     </div>
@@ -22,6 +22,9 @@
 <script>
     export default {
         computed: {
+            curInterval() {
+                return this.$store.state.curInterval;
+            },
             taskFormShow() {
                 return this.$store.state.taskFormShow;
             },
