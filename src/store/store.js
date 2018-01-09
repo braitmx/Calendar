@@ -61,7 +61,7 @@ export const store = new Vuex.Store({
 
             state.curSlot = [];
 
-                for (let i = int; i < int + 6; i++) {
+                for (let i = int; i <= int + 6; i++) {
                     state.curSlot.push(slots[i - 1]);
                 }
         },
@@ -73,7 +73,7 @@ export const store = new Vuex.Store({
         addTaskElToStore(state, el) {
             state.taskEl = el;
         },
-
+ 
         addTaskToEl(state, task) {
             state.taskEl.task = task;
         },

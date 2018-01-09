@@ -155,7 +155,7 @@
                         }
                     }
                 }
-                this.$store.commit('getTimeInterval', this.dateInterval);
+                this.$store.commit('getTimeInterval', +this.dateInterval);
                 this.$store.commit('genegateSlots');
                 this.$store.commit('getCurSlot');
             }

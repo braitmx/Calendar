@@ -5,7 +5,7 @@
                 <div class="calendar__time-col">
                     <div class="calendar__time" v-for="(item, i) in timeSlots" :key="i">{{item}} - {{item + 4}}</div>
                 </div>
-                <div class="calendar__day-col" v-for="(slot, i) in slots" v-if="curInterval != 29" :data-index="i" :key="i">
+                <div class="calendar__day-col" v-for="(slot, i) in curSlot" :data-index="curInterval + i-1 " :key="i">
                     <div class="calendar__day" v-for="item in slot" :id="item.id" @click.prevent="addTaskToSlot" :key="item.id">
                         {{item.startTime}}
                         <div class="calendar__event" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
@@ -24,6 +24,9 @@
         computed: {
             curInterval() {
                 return this.$store.state.curInterval;
+            },
+            curSlot() {
+                return this.$store.state.curSlot;
             },
             taskFormShow() {
                 return this.$store.state.taskFormShow;
