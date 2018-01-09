@@ -11,7 +11,12 @@ export const store = new Vuex.Store({
         slots: [],
         curSlot: [],
         taskFormShow: false,
-        taskEl: {}
+        taskEl: {},
+
+        taskTime: {
+            startTime: '',
+            endTime: ''
+        }
     },
 
     getters: {

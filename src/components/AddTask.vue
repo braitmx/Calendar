@@ -5,10 +5,10 @@
         <input type="text" v-model="task.desc" required>
         <br /><br />
         <label for="startTime">StartTime:</label>
-        <input type="text" placeholder="example: 02.09 12:40" v-model="task.startTime" required>
+        <input type="text" placeholder="example: 12:30" v-model="task.startTime" required>
         <br />
         <label for="endTime">EndTime:</label>
-        <input type="text" placeholder="example: 02.09 13:20" v-model="task.endTime" required>
+        <input type="text" placeholder="example: 13:30" v-model="task.endTime" required>
         <br />
         <label for="period">Periodicity:</label>
         <br />
@@ -56,6 +56,9 @@
             },
             taskEl() {
                 return this.$store.state.taskEl;
+            },
+            taskTime() {
+                return this.$store.state.taskTime;
             }
         },
 
