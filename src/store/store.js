@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
 
                         sTime += 4;
                         sTime === 24 ? sTime = 0 : sTime;
-                    } 
+                    }
                     else slot.push({ id: j, disable: true });
 
                 }
@@ -61,9 +61,10 @@ export const store = new Vuex.Store({
 
             state.curSlot = [];
 
-                for (let i = int; i <= int + 6; i++) {
-                    state.curSlot.push(slots[i - 1]);
-                }
+            for (let i = int; i <= int + 6; i++) {
+                
+                state.curSlot.push(slots[i - 1]);
+            }
         },
 
         changeVisibility(state) {
@@ -73,7 +74,7 @@ export const store = new Vuex.Store({
         addTaskElToStore(state, el) {
             state.taskEl = el;
         },
- 
+
         addTaskToEl(state, task) {
             state.taskEl.task = task;
         },

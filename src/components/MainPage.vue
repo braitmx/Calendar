@@ -87,6 +87,9 @@
             curMonthInfo() {
                 return this.$store.state.curMonthInfo;
             },
+            slots() {
+                return this.$store.state.slots;
+            },
             curSlot() {
                 return this.$store.state.curSlot;
             },
@@ -156,7 +159,7 @@
                     }
                 }
                 this.$store.commit('getTimeInterval', +this.dateInterval);
-                this.$store.commit('genegateSlots');
+                if (this.slots.length === 0) this.$store.commit('genegateSlots');
                 this.$store.commit('getCurSlot');
             }
         },
