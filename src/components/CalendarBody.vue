@@ -7,7 +7,7 @@
                 </div>
                 <div class="calendar__day-col" v-for="(slot, i) in curSlot" :data-index="curInterval + i - 1" :key="i">
                     <template v-for="item in slot">    
-                        <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot" :key="item.id">
+                        <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot($event, item.startTime)" :key="item.id">
                             {{item.startTime}}
                             <div class="calendar__event" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
                                 {{task.desc}}<br /> {{task.startTime}} - {{task.endTime}}
@@ -48,13 +48,14 @@ export default {
     }
   },
   methods: {
-    addTaskToSlot: function(e) {
+    addTaskToSlot: function(e, sTime) {
       let data = {
         id: e.target.id,
         i: e.target.parentElement.dataset.index,
         task: {}
       };
 
+      this.$store.commit("getTaskTime", {startTime: sTime, endTime: ''});  
       this.$store.commit("addTaskElToStore", data);
 
       if (!this.taskFormShow) this.$store.commit("changeVisibility");

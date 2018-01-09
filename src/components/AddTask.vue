@@ -5,14 +5,14 @@
         <input type="text" v-model="task.desc" required>
         <br /><br />
         <label for="startTime">StartTime:</label>
-        <input type="text" placeholder="example: 12:30" v-model="task.startTime" required>
+        <input type="text" placeholder="example: 12:30" v-model="fullTime.sTime" required>
         <br />
         <label for="endTime">EndTime:</label>
-        <input type="text" placeholder="example: 13:30" v-model="task.endTime" required>
+        <input type="text" placeholder="example: 13:30" v-model="fullTime.eTime" required>
         <br />
-        <label for="period">Periodicity:</label>
+        <label for="period">Period:</label>
         <br />
-        <select name="period" multiple v-model="task.period">
+        <select name="period" v-model="task.period">
                 <option value="" selected="selected">-</option>
                 <option value="Mon">Monday</option>
                 <option value="Tue">Tuesday</option>
@@ -59,6 +59,9 @@
             },
             taskTime() {
                 return this.$store.state.taskTime;
+            },
+            fullTime() {
+                return this.$store.getters.fullTime;
             }
         },
 

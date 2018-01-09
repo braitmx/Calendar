@@ -20,6 +20,12 @@ export const store = new Vuex.Store({
     },
 
     getters: {
+        fullTime: state => {
+            return {
+                sTime: state.taskTime.startTime + ':00',
+                eTime: state.taskTime.startTime + ':30'
+            }
+        }
     },
 
     mutations: {
@@ -67,9 +73,14 @@ export const store = new Vuex.Store({
             state.curSlot = [];
 
             for (let i = int; i <= int + 6; i++) {
-                
+
                 state.curSlot.push(slots[i - 1]);
             }
+        },
+
+        getTaskTime(state, time) {
+            state.taskTime.startTime = time.startTime;
+            state.taskTime.endTime = time.endTime;
         },
 
         changeVisibility(state) {
