@@ -31,13 +31,18 @@ export const store = new Vuex.Store({
 
             let sTime = 0, index = 0, slot = [], slotsStor = [], daysNumber = state.curMonthInfo.daysNumber;
 
-            for (let i = 1; i <= daysNumber; i++) {
+            for (let i = 1; i <= 35; i++) {
 
                 for (let j = index; j < index + 6; j++) {
-                    slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: [] });
 
-                    sTime += 4;
-                    sTime === 24 ? sTime = 0 : sTime;
+                    if (i <= daysNumber) {
+                        slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: [] });
+
+                        sTime += 4;
+                        sTime === 24 ? sTime = 0 : sTime;
+                    } 
+                    else slot.push({ id: j, disable: true });
+
                 }
 
                 index += 6;
@@ -54,17 +59,10 @@ export const store = new Vuex.Store({
             let int = +state.curInterval,
                 slots = state.slots;
 
-            if (int != 29) {
+            state.curSlot = [];
+
                 for (let i = int; i < int + 6; i++) {
-                    state.curSlot.push(slots[i-1]);
-                }
-            } 
-            else 
-                for (let j = int; j < int + 6; j++) {
-                    if (slots[j-1]) state.curSlot.push(slots[j-1]);
-                    else state.curSlot.push(
-                        {disable: true}
-                    );
+                    state.curSlot.push(slots[i - 1]);
                 }
         },
 
