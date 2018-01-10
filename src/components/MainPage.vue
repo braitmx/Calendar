@@ -127,6 +127,7 @@
                             this.daysNumber = this.mData[i].days;
 
                             this.$store.commit('getMunthInfo', {
+                                id: this.mData[i].id,
                                 month: this.mData[i].name,
                                 daysNumber: this.daysNumber
                             });
