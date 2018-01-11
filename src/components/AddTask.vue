@@ -84,12 +84,11 @@ export default {
 
   methods: {
     addTask: function() {
-      if (
-        this.task.desc &&
-        this.task.startTime &&
-        this.task.endTime &&
-        this.task.category
-      ) {
+      let startTime = this.task.startTime,
+          endTime = this.task.endTime;
+
+      if (this.task.desc && startTime && endTime && this.task.category) {
+
         function convertToDate(time, context) {
           let year = new Date().getFullYear(),
             month = context.curMonthInfo.id - 1, // month id from 1
@@ -101,16 +100,20 @@ export default {
 
           return dateTime;
         }
+        // base validation
 
         let reg = /[0-9]{2}:[0-9]{2}/;
-        if (!reg.test(this.task.startTime) || !reg.test(this.task.endTime)) {
+
+        if (!reg.test(startTime) || !reg.test(endTime)) {
           alert("Error: incorrect time");
         } else {
           this.task.startTime = convertToDate(this.task.startTime, this);
           this.task.endTime = convertToDate(this.task.endTime, this);
 
           if (this.taskTime.startTime > this.task.startTime.getHours())
-            alert("Error: time can't be lower than default value");
+            alert("Error: Start-time can't be lower than default value");
+          else if ("24:00" < endTime)
+            alert("Error: End-time can't be higher than 24");
           else if (
             this.task.endTime.getTime() - this.task.startTime.getTime() <=
             0
@@ -142,19 +145,6 @@ export default {
   /*methods: {
              addTask: function () {
 
-                if (this.task.desc && this.task.startTime && this.task.endTime && this.task.period && this.task.category) {
-
-                    let cloneTask = {};
-
-                    for (let key in this.task) {
-                        cloneTask[key] = this.task[key];
-                    }
-
-                    this.data.tasks.push(cloneTask);
-
-                    //first > last
-                }
-
                 Firebase.database().ref('tasks/' + this.uid).set({
                     data: this.data.tasks
                 });
@@ -166,7 +156,6 @@ export default {
                 }
 
                 this.$store.commit('changeVisibility');
-            } 
         },*/
   /*created() {
 
