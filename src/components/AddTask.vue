@@ -48,8 +48,15 @@ export default {
         period: "",
         category: "",
         showTime: function() {
-          return this.startTime.getHours() +':' + this.startTime.getMinutes() + ' - ' + 
-                 this.endTime.getHours() +':' + this.endTime.getMinutes(); 
+          return (
+            this.startTime.getHours() +
+            ":" +
+            this.startTime.getMinutes() +
+            " - " +
+            this.endTime.getHours() +
+            ":" +
+            this.endTime.getMinutes()
+          );
         }
       }
     };
@@ -95,33 +102,38 @@ export default {
           return dateTime;
         }
 
-        this.task.startTime = convertToDate(this.task.startTime, this);
-        this.task.endTime = convertToDate(this.task.endTime, this);
+        let reg = /[0-9]{2}:[0-9]{2}/;
+        if (!reg.test(this.task.startTime) || !reg.test(this.task.endTime)) {
+          alert("Error: incorrect time");
+        } else {
+          this.task.startTime = convertToDate(this.task.startTime, this);
+          this.task.endTime = convertToDate(this.task.endTime, this);
 
-        if (this.taskTime.startTime > this.task.startTime.getHours())
-          alert("Error: time can't be lower than default value");
-        else if (
-          this.task.endTime.getTime() - this.task.startTime.getTime() <= 0
-        )
-          alert("incorrect time interval!");
-        else {
-          let cloneTask = {};
+          if (this.taskTime.startTime > this.task.startTime.getHours())
+            alert("Error: time can't be lower than default value");
+          else if (
+            this.task.endTime.getTime() - this.task.startTime.getTime() <=
+            0
+          )
+            alert("incorrect time interval!");
+          else {
+            let cloneTask = {};
 
-          for (let key in this.task) {
-            cloneTask[key] = this.task[key];
+            for (let key in this.task) {
+              cloneTask[key] = this.task[key];
+            }
+
+            this.$store.commit("addTaskToEl", cloneTask);
+
+            //first > last
+
+            this.$store.commit("renderTask", this.taskEl);
+
+            if (this.taskFormShow) this.$store.commit("changeVisibility");
           }
-
-          this.$store.commit("addTaskToEl", cloneTask);
-
-          //first > last
-
-          this.$store.commit("renderTask", this.taskEl);
-
-          if (this.taskFormShow) this.$store.commit("changeVisibility");
         }
-
         for (let key in this.task) {
-            if (key != 'showTime') this.task[key] = "";
+          if (key != "showTime") this.task[key] = "";
         }
       } else alert("incorrect form validation");
     }
