@@ -49,11 +49,30 @@ export default {
                 category: "",
 
                 showTime: function() {
+
+                    // add zero to time    
+                    let startTimeH = this.startTime.getHours(),
+                        startTimeM = this.startTime.getMinutes(),
+                        endTimeH = this.endTime.getHours(),
+                        endTimeM = this.endTime.getMinutes();
+
+                    function addZero(time) {
+                        if (time < 10) {
+                            time = '0' + time;
+                        }
+                        return time;
+                    }    
+            
+                    startTimeH = addZero(startTimeH);
+                    startTimeM = addZero(startTimeM);
+                    endTimeH = addZero(endTimeH);
+                    endTimeM = addZero(endTimeM);
+                    
                     return (
-                        this.startTime.getHours() + ":" +
-                        this.startTime.getMinutes() + " - " +
-                        this.endTime.getHours() + ":" +
-                        this.endTime.getMinutes()
+                        startTimeH + ":" +
+                        startTimeM + " - " +
+                        endTimeH + ":" +
+                        endTimeM
                     );
                 }
             }
