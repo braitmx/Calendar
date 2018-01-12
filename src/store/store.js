@@ -57,9 +57,7 @@ export const store = new Vuex.Store({
                 }
 
                 index += 6;
-
                 slotsStor.push(slot);
-
                 slot = [];
             }
 

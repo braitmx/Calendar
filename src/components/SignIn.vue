@@ -37,25 +37,22 @@
             logIn() {
                 Firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
                     .then( responce => {
-                        console.log(responce);
                         const settings = {
                             email: responce.email,
                             uid: responce.uid,
                             main: true,
                             complete: true
-                        }
+                        };
                         this.$emit('addUser', settings);
                         this.show = false;
                         this.signSuccess = true;
 
                         this.$router.push('/calendar');
-
                     })
                     .catch(error => {
                         this.signError = true;
                         console.log(error);
-                    })
-                    
+                    }); 
             }
         }
     }

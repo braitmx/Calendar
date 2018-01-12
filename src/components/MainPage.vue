@@ -3,7 +3,6 @@
         <h1>Calendar</h1>
 
         <!--Select Dates -->
-
         <form class="selectDates">
             <label for="month">Month:</label>
             <br />
@@ -83,6 +82,7 @@
                 }
             }
         },
+
         computed: {
             curMonthInfo() {
                 return this.$store.state.curMonthInfo;
@@ -97,6 +97,7 @@
                 return this.$store.state.taskFormShow;
             }
         },
+
         components: {
             CalendarBody,
             AddTask
@@ -105,16 +106,18 @@
         props: ['uid'],
 
         methods: {
-
             dateChange: function () {
-
                 function empty(el) {
-                    if (el) el = [];
+                    if (el) {
+                        el = [];
+                    }
 
                     return el;
                 }
 
-                if (!this.visible) this.visible = true;
+                if (!this.visible) {
+                    this.visible = true;
+                }
 
                 this.renderHead.day = empty(this.renderHead.day);
 
@@ -153,28 +156,34 @@
                         if (this.daysNumber) {
 
                             for (let i = +this.dateInterval; i <= endInterval; i++) {
-                                if (i <= this.daysNumber) this.renderHead.date.push(i);
-                                else this.renderHead.date.push(i - this.daysNumber);
+                                if (i <= this.daysNumber) {
+                                    this.renderHead.date.push(i);
+                                } else { 
+                                    this.renderHead.date.push(i - this.daysNumber);
+                                }
                             }
                         }
                     }
                 }
+                
                 this.$store.commit('getTimeInterval', +this.dateInterval);
-                if (this.slots.length === 0) this.$store.commit('genegateSlots');
+
+                if (this.slots.length === 0) {
+                    this.$store.commit('genegateSlots');
+                }
+
                 this.$store.commit('getCurSlot');
             }
         },
 
         created() {
-
             const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
 
             getTasks.on('value', (snapshot) => {
 
                 if (snapshot.val()) {
                     this.data.tasks = snapshot.val();
-                }
-                else {
+                } else {
                     this.data.tasks = [];
                 }
 

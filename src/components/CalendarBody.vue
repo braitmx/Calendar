@@ -13,54 +13,55 @@
                                 {{task.desc}}<br /> {{task.showTime()}}
                             </div>
                         </div>
-
                         <div class="calendar__day--disabled" v-else :id="item.id" :key="item.id">
-                        
                         </div>
                     </template>  
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
+
 export default {
-  computed: {
-    curInterval() {
-      return this.$store.state.curInterval;
+    computed: {
+        curInterval() {
+            return this.$store.state.curInterval;
+        },
+        curSlot() {
+            return this.$store.state.curSlot;
+        },
+        taskFormShow() {
+            return this.$store.state.taskFormShow;
+        },
+        timeSlots() {
+            return this.$store.state.timeSlots;
+        },
+        slots() {
+            return this.$store.state.slots;
+        },
+        newTask() {
+            return this.$store.state.newTask;
+        }
     },
-    curSlot() {
-      return this.$store.state.curSlot;
-    },
-    taskFormShow() {
-      return this.$store.state.taskFormShow;
-    },
-    timeSlots() {
-      return this.$store.state.timeSlots;
-    },
-    slots() {
-      return this.$store.state.slots;
-    },
-    newTask() {
-      return this.$store.state.newTask;
-    }
-  },
-  methods: {
-    addTaskToSlot: function(e, sTime) {
-      let data = {
-        id: e.target.id,
-        i: e.target.parentElement.dataset.index,
-        task: {}
-      };
 
-      this.$store.commit("getTaskTime", {startTime: sTime, endTime: ''});  
-      this.$store.commit("addTaskElToStore", data);
+    methods: {
+        addTaskToSlot: function(e, sTime) {
+            let data = {
+                id: e.target.id,
+                i: e.target.parentElement.dataset.index,
+                task: {}
+            };
 
-      if (!this.taskFormShow) this.$store.commit("changeVisibility");
+            this.$store.commit("getTaskTime", {startTime: sTime, endTime: ''});  
+            this.$store.commit("addTaskElToStore", data);
+
+            if (!this.taskFormShow) {
+                this.$store.commit("changeVisibility");
+            }
+        }
     }
-  }
 };
 </script>
 
