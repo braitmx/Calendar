@@ -21,9 +21,22 @@ export const store = new Vuex.Store({
 
     getters: {
         fullTime: state => {
+            let startTime = state.taskTime.startTime + ':00',
+                endTime = state.taskTime.startTime + ':30';
+
+            function addZero(time) {
+                if (time.length === 4 ) {
+                    time = '0' + time;
+                }
+                return time;
+            }    
+            
+            startTime = addZero(startTime);
+            endTime = addZero(endTime);
+
             return {
-                sTime: state.taskTime.startTime + ':00',
-                eTime: state.taskTime.startTime + ':30'
+                sTime: startTime,
+                eTime: endTime
             }
         }
     },
@@ -37,7 +50,7 @@ export const store = new Vuex.Store({
             state.curInterval = int;
         },
 
-        genegateSlots(state) {
+        generateSlots(state) {
             // add slots to state
 
             let sTime = 0, index = 0, slot = [], slotsStor = [], daysNumber = state.curMonthInfo.daysNumber;
@@ -94,9 +107,10 @@ export const store = new Vuex.Store({
         },
 
         renderTask(state, data) {
-
             state.slots[data.i].forEach(function (el) {
-                if (el.id === +data.id) el.tasks.push(data.task);
+                if (el.id === +data.id) {
+                    el.tasks.push(data.task);
+                }
             });
         }
     },

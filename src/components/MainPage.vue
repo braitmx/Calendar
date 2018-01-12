@@ -169,7 +169,7 @@
                 this.$store.commit('getTimeInterval', +this.dateInterval);
 
                 if (this.slots.length === 0) {
-                    this.$store.commit('genegateSlots');
+                    this.$store.commit('generateSlots');
                 }
 
                 this.$store.commit('getCurSlot');
