@@ -14,13 +14,7 @@
         <br />
         <select name="period" v-model="task.period">
             <option value="" selected="selected">-</option>
-            <option value="Mon">Monday</option>
-            <option value="Tue">Tuesday</option>
-            <option value="Wed">Wednesday</option>
-            <option value="Thu">Thursday</option>
-            <option value="Fri">Friday</option>
-            <option value="Sat">Saturday</option>
-            <option value="Sun">Sunday</option>
+            <option value="current">Current day</option>
         </select>
         <br /><br />
         <label for="category">Category:</label>

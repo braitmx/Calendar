@@ -107,11 +107,32 @@ export const store = new Vuex.Store({
         },
 
         renderTask(state, data) {
-            state.slots[data.i].forEach(function (el) {
-                if (el.id === +data.id) {
-                    el.tasks.push(data.task);
+            let week = 0;
+
+            let addTask = function () {
+                state.slots[+data.i + week].forEach(function (el) {
+                     
+                    // period not set (week === 0) - add task once  
+                    // if period set (week != 0) - add task for every week: 7 days * 6 timeslots  
+                    if (el.id === +data.id + week * 6) {
+                        el.tasks.push(data.task);
+                    }
+                });
+            };
+
+            // add task once, period not set
+            addTask();
+            
+            // period set 
+            if (data.task.period !== '') {
+                week = 7;     
+
+                while (+data.i + week < state.curMonthInfo.daysNumber) {
+                    addTask();
+    
+                    week += 7;
                 }
-            });
+            }
         }
     },
 
