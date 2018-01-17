@@ -110,10 +110,10 @@ export default {
 
                 function convertToDate(time, context) {
                     let year = new Date().getFullYear(),
-                    month = context.curMonthInfo.id - 1, // month id from 1
-                    day = +context.taskEl.i + 1,         // index from zero
-                    h = time.slice(0, -3),
-                    min = time.slice(3);
+                        month = context.curMonthInfo.id - 1, // month id from 1
+                        day = +context.taskEl.i + 1,         // index from zero
+                        h = time.slice(0, -3),
+                        min = time.slice(3);
 
                     let dateTime = new Date(year, month, day, h, min);
 

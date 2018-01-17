@@ -9,7 +9,7 @@
                     <template v-for="item in slot">    
                         <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot($event, item.startTime)" :key="item.id">
                             {{item.startTime}}
-                            <div class="calendar__event" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
+                            <div :class="['calendar__event', taskColor[task.category]]" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
                                 {{task.desc}}<br /> {{task.showTime()}}
                             </div>
                         </div>
@@ -25,6 +25,16 @@
 <script>
 
 export default {
+    data() {
+        return {
+            taskColor: {
+                'Home': '',
+                'Job': 'calendar__event--green',
+                'Rest': 'calendar__event--orange'
+            }
+        }
+    },
+
     computed: {
         curInterval() {
             return this.$store.state.curInterval;
