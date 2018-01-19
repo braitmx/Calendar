@@ -148,6 +148,40 @@ export const store = new Vuex.Store({
 
             // sort tasks time
             state.activeTasksTime.sort(compareNumbers);   
+        },
+
+        checkNearestTask(state) {
+            let curTime;
+
+            function getTaskAlert() {
+                
+                if (state.activeTasksTime.length != 0) {
+                    curTime = new Date().getTime();
+
+                    console.log(((state.activeTasksTime[0] - curTime) / 60000).toFixed(2));
+                
+                    // 300k ms = 5 min
+                    if (state.activeTasksTime[0] - curTime < 300000) {
+
+                         //delete 1-st task
+                         state.activeTasksTime.shift();
+                         getTaskAlert();
+                    }
+
+                    if (state.activeTasksTime[0] - curTime > 300000) {
+                        setTimeout(() => getTaskAlert(), 1000); 
+                    } else {
+                        alert('5 minutes to the beginning of your task!');
+
+                        //delete 1-st task
+                        state.activeTasksTime.shift();
+                        debugger;
+                        getTaskAlert();
+                    }
+                }
+            }
+
+            getTaskAlert();
         }
     },
 
