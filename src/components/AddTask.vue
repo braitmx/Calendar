@@ -136,6 +136,8 @@ export default {
                             cloneTask[key] = this.task[key];
                         }
 
+                        this.$store.commit("addActiveTasksTime", this.task.startTime.getTime());
+
                         this.$store.commit("addTaskToEl", cloneTask);
                         this.$store.commit("renderTask", this.taskEl);
 

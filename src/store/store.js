@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
         taskTime: {
             startTime: '',
             endTime: ''
-        }
+        },
+        activeTasksTime: []
     },
 
     getters: {
@@ -133,6 +134,20 @@ export const store = new Vuex.Store({
                     week += 7;
                 }
             }
+        },
+
+        addActiveTasksTime(state, time) {
+
+            // add new task start time
+            state.activeTasksTime.push(time);
+
+            function compareNumbers(a, b) {
+                if (a > b) return 1;
+                if (a < b) return -1;
+            }
+
+            // sort tasks time
+            state.activeTasksTime.sort(compareNumbers);   
         }
     },
 

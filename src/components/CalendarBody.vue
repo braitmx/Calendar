@@ -53,6 +53,9 @@ export default {
         },
         newTask() {
             return this.$store.state.newTask;
+        },
+        activeTasksTime() {
+            return this.$store.state.activeTasksTime;
         }
     },
 
