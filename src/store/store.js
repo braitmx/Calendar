@@ -153,35 +153,40 @@ export const store = new Vuex.Store({
         checkNearestTask(state) {
             let curTime;
 
-            function getTaskAlert() {
-                
+            function ifTasks(func) {
                 if (state.activeTasksTime.length != 0) {
-                    curTime = new Date().getTime();
-
-                    console.log(((state.activeTasksTime[0] - curTime) / 60000).toFixed(2));
-                
-                    // 300k ms = 5 min
-                    if (state.activeTasksTime[0] - curTime < 300000) {
-
-                         //delete 1-st task
-                         state.activeTasksTime.shift();
-                         getTaskAlert();
-                    }
-
-                    if (state.activeTasksTime[0] - curTime > 300000) {
-                        setTimeout(() => getTaskAlert(), 1000); 
-                    } else {
-                        alert('5 minutes to the beginning of your task!');
-
-                        //delete 1-st task
-                        state.activeTasksTime.shift();
-                        debugger;
-                        getTaskAlert();
-                    }
+                    func();   
                 }
             }
 
-            getTaskAlert();
+            function deleteOldTasks() {
+                
+                // 300k ms = 5 min
+                if (state.activeTasksTime[0] - curTime < 300000) {
+                    state.activeTasksTime.shift();
+                    ifTasks(deleteOldTasks);
+                }
+            }
+
+            function getTaskAlert() {
+                
+                curTime = new Date().getTime();
+                
+                if (state.activeTasksTime[0] - curTime > 300000) {
+                    var timerId = setTimeout(() => ifTasks(getTaskAlert), 1000); 
+                } else {
+                    alert('5 minutes to the beginning of your task!');
+                    clearTimeout(timerId);
+
+                    //delete 1-st task
+                    state.activeTasksTime.shift();
+                    
+                    ifTasks(getTaskAlert);
+                }
+            }
+
+            deleteOldTasks();
+            ifTasks(getTaskAlert);
         }
     },
 
