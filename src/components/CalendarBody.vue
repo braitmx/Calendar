@@ -8,9 +8,9 @@
                 <div class="calendar__day-col" v-for="(slot, i) in curSlot" :data-index="curInterval + i - 1" :key="i">
                     <template v-for="item in slot">    
                         <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot($event, item.startTime)" :key="item.id">
-                            {{item.startTime}}
                             <div :class="['calendar__event', taskColor[task.category]]" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
-                                {{task.desc}}<br /> {{task.showTime()}}
+                                {{task.desc}} <br /> 
+                                <span class="calendar__event-time">{{task.showTime()}}</span>
                             </div>
                         </div>
                         <div class="calendar__day--disabled" v-else :id="item.id" :key="item.id">
@@ -98,7 +98,7 @@ export default {
 .calendar__day {
   width: 100%;
   height: 120px;
-  padding: 5px;
+  padding: 2px;
   background: lightblue;
   border: 1px solid #f2f2f2;
   box-sizing: border-box;
@@ -129,12 +129,15 @@ export default {
 }
 
 .calendar__event {
-  width: 95%;
-  display: inline-block;
+  width: 45%;
+  float: left;
+  height: 52px;
   background-color: #029ae4;
   border-radius: 5px;
-  padding: 4px;
-  margin-bottom: 5px;
+  padding-left: 4px;
+  margin: 2px;
+  line-height: 1;
+  overflow: hidden;
   color: #fff;
   box-sizing: border-box;
 }
@@ -145,5 +148,9 @@ export default {
 
 .calendar__event--orange {
   background-color: #f05722;
+}
+
+.calendar__event-time {
+    font-size: 12px;
 }
 </style>

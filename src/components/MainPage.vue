@@ -204,7 +204,7 @@ input {
 
 .calendar__head {
   width: 100%;
-  height: 150px;
+  height: 100px;
 }
 
 .calendar__head-row {
