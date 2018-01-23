@@ -87,6 +87,9 @@
             curMonthInfo() {
                 return this.$store.state.curMonthInfo;
             },
+            previousMonthId() {
+                return this.$store.state.previousMonthId;
+            },
             slots() {
                 return this.$store.state.slots;
             },
@@ -128,6 +131,11 @@
                         if (this.mData[i].id === +this.curMonth) {
                             this.firstDay = this.mData[i].firstDay;
                             this.daysNumber = this.mData[i].days;
+                            
+                            // set prev Month Id
+                            if (this.curMonthInfo.id) {
+                                this.$store.commit('getPreviousMonthId', this.curMonthInfo.id);
+                            }
 
                             this.$store.commit('getMunthInfo', {
                                 id: this.mData[i].id,
@@ -171,12 +179,16 @@
                 // get task slots from FB
                 //this.$store.dispatch('getDataFromFB');
                 
+                if (this.previousMonthId !== null && this.previousMonthId !== this.curMonthInfo.id) {
+                    this.$store.commit('emptySlots');
+                }
+                
                 if (this.slots.length === 0) {
                     this.$store.commit('generateSlots');
                 } else {
 
                     // send slots to FB
-                    this.$store.dispatch('sendDataToFB', this.uid);
+                    // this.$store.dispatch('sendDataToFB', this.uid);
                 }
 
                 this.$store.commit('getCurSlot');

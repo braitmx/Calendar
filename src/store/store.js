@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     state: {
         curMonthInfo: {},
         curInterval: null,
+        previousMonthId: null,
         timeSlots: [0, 4, 8, 12, 16, 20],
         slots: [],
         curSlot: [],
@@ -50,6 +51,14 @@ export const store = new Vuex.Store({
 
         getTimeInterval(state, int) {
             state.curInterval = int;
+        },
+
+        getPreviousMonthId(state, prevId) {
+            state.previousMonthId = prevId;
+        },
+
+        emptySlots(state) {
+            state.slots = [];
         },
 
         generateSlots(state) {
