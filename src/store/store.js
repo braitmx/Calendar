@@ -205,28 +205,37 @@ export const store = new Vuex.Store({
     },
 
     actions: {
-        getDataFromFB({ commit }) {
-                console.log('Get data');
+        getDataFromFB({ commit }, uid) {
+            console.log('Get data');
 
-                const getSlots = Firebase.database().ref(this.uid + '/' + this.state.curMonthInfo.id + '/slots');
+            const getSlots = Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id + '/slots');
+            
+            getSlots.on('value', (snapshot) => {
+                debugger;
+                if (snapshot.val()) {
+                    commit('setUserSlots', snapshot.val());
+                } else {
 
-                getSlots.on('value', (snapshot) => {
-
-                    if (snapshot.val()) {
-                        commit('setUserSlots', snapshot.val());
-                    } else {
-                        console.log('data is empty');
+                    // if slots in FB don't exist generate it 
+                    if (this.state.slots.length === 0) {
+                        commit('generateSlots');
                     }
-                });
+                }
 
-                console.log('get data: ',  snapshot.val());
+                // push current slot to state
+                commit('getCurSlot');
+            });
         },
 
-        sendDataToFB(state, uid) {
-            Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id).set({
-                slots: this.state.slots
-            });
+        sendDataToFB(state, data) {
+            debugger;
+            console.log(this.state.slots);
 
+            if (this.state.slots !== [] && this.state.activeTasksTime.length !== 0) {
+                Firebase.database().ref(data.uid + '/' + data.monthId).set({
+                    slots: this.state.slots
+                });
+            }
         }
     }
 

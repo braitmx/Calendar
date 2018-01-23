@@ -176,26 +176,25 @@
                 
                 this.$store.commit('getTimeInterval', +this.dateInterval);
 
-                // get task slots from FB
-                //this.$store.dispatch('getDataFromFB');
-                
                 if (this.previousMonthId !== null && this.previousMonthId !== this.curMonthInfo.id) {
-                    this.$store.commit('emptySlots');
-                }
-                
-                if (this.slots.length === 0) {
-                    this.$store.commit('generateSlots');
-                } else {
 
                     // send slots to FB
-                    // this.$store.dispatch('sendDataToFB', this.uid);
+                    this.$store.dispatch('sendDataToFB', {uid: this.uid, monthId: this.previousMonthId});
+
+                    this.$store.commit('emptySlots');
                 }
 
-                this.$store.commit('getCurSlot');
+                if (this.previousMonthId === null || this.previousMonthId !== this.curMonthInfo.id) {
+                    
+                    // get task slots from FB or generate it
+                    this.$store.dispatch('getDataFromFB', this.uid);    
+                }
             }
         },
 
-        created() {
+        beforeDestroy() {
+            // send slots to FB
+            this.$store.dispatch('sendDataToFB', this.uid);
         }
     }
 </script>
