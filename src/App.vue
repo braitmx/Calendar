@@ -12,7 +12,7 @@
             </div>
 
             <div v-show="signComplete">
-                <span>{{ email }}</span>
+                <span class="user__mail">{{ email }}</span>
             </div>
         </div>
         <div class="container">
@@ -47,12 +47,24 @@
 </script>
 
 <style>
+body {
+    margin: 0;
+    padding: 0;    
+}
+
 .header {
   width: 100%;
   height: 50px;
-  background-color: rgb(151, 151, 130);
+  background-color: rgb(104, 105, 117);
   padding: 5px;
   box-sizing: border-box;
+}
+
+.user__mail {
+    color: white;
+    font-size: 18px;
+    display: block;
+    margin-top: 8px;
 }
 
 button {
@@ -63,5 +75,9 @@ button {
   padding: 5px;
   text-shadow: 0 1px 0 #FFFFFF;
   background-color: #FCE374;
+}
+
+.container {
+    padding: 5px;
 }
 </style>

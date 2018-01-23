@@ -58,6 +58,8 @@
     }
 </script>
 
-<style>
-
+<style scoped>
+input {
+    margin-bottom: 15px;
+}
 </style>

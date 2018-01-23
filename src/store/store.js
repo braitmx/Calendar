@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -26,7 +27,7 @@ export const store = new Vuex.Store({
                 endTime = state.taskTime.startTime + ':30';
 
             function addZero(time) {
-                if (time.length === 4 ) {
+                if (time.length === 4) {
                     time = '0' + time;
                 }
                 return time;
@@ -187,10 +188,37 @@ export const store = new Vuex.Store({
 
             deleteOldTasks();
             ifTasks(getTaskAlert);
+        },
+
+        setUserSlots(state, data) {
+            state.slots = data;
         }
     },
 
     actions: {
+        getDataFromFB({ commit }) {
+                console.log('Get data');
+
+                const getSlots = Firebase.database().ref(this.uid + '/' + this.state.curMonthInfo.id + '/slots');
+
+                getSlots.on('value', (snapshot) => {
+
+                    if (snapshot.val()) {
+                        commit('setUserSlots', snapshot.val());
+                    } else {
+                        console.log('data is empty');
+                    }
+                });
+
+                console.log('get data: ',  snapshot.val());
+        },
+
+        sendDataToFB(state, uid) {
+            Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id).set({
+                slots: this.state.slots
+            });
+
+        }
     }
 
 });

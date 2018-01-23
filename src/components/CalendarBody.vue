@@ -10,7 +10,7 @@
                         <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot($event, item.startTime)" :key="item.id">
                             <div :class="['calendar__event', taskColor[task.category]]" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
                                 {{task.desc}} <br /> 
-                                <span class="calendar__event-time">{{task.showTime()}}</span>
+                                <span class="calendar__event-time">{{task.fullTime}}</span>
                             </div>
                         </div>
                         <div class="calendar__day--disabled" v-else :id="item.id" :key="item.id">

@@ -10,10 +10,10 @@
                 <option v-for="month in mData" :value="month.id" :key="month.id">{{month.name}}</option>
             </select>
             <br /><br />
-            <label for="dateInterval">Select date interval:</label>
+            <label for="dateInterval">Date interval:</label>
             <br />
             <select name="dateInterval" v-model="dateInterval">
-                <option value="1">1-7</option>
+                <option value="1" selected>1-7</option>
                 <option value="8">8-14</option>
                 <option value="15">15-21</option>
                 <option value="22">22-28</option>
@@ -168,8 +168,15 @@
                 
                 this.$store.commit('getTimeInterval', +this.dateInterval);
 
+                // get task slots from FB
+                //this.$store.dispatch('getDataFromFB');
+                
                 if (this.slots.length === 0) {
                     this.$store.commit('generateSlots');
+                } else {
+
+                    // send slots to FB
+                    this.$store.dispatch('sendDataToFB', this.uid);
                 }
 
                 this.$store.commit('getCurSlot');
@@ -177,17 +184,6 @@
         },
 
         created() {
-            const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
-
-            getTasks.on('value', (snapshot) => {
-
-                if (snapshot.val()) {
-                    this.data.tasks = snapshot.val();
-                } else {
-                    this.data.tasks = [];
-                }
-
-            });
         }
     }
 </script>

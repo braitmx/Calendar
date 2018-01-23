@@ -41,34 +41,7 @@ export default {
                 endTime: "",
                 period: "",
                 category: "",
-
-                showTime: function() {
-
-                    // add zero to time    
-                    let startTimeH = this.startTime.getHours(),
-                        startTimeM = this.startTime.getMinutes(),
-                        endTimeH = this.endTime.getHours(),
-                        endTimeM = this.endTime.getMinutes();
-
-                    function addZero(time) {
-                        if (time < 10) {
-                            time = '0' + time;
-                        }
-                        return time;
-                    }    
-            
-                    startTimeH = addZero(startTimeH);
-                    startTimeM = addZero(startTimeM);
-                    endTimeH = addZero(endTimeH);
-                    endTimeM = addZero(endTimeM);
-                    
-                    return (
-                        startTimeH + ":" +
-                        startTimeM + " - " +
-                        endTimeH + ":" +
-                        endTimeM
-                    );
-                }
+                fullTime: ""
             }
         };
     },
@@ -132,6 +105,9 @@ export default {
                     } else {
                         let cloneTask = {};
 
+                        // set task time for render
+                        this.task.fullTime = startTime + ' - ' + endTime;
+
                         for (let key in this.task) {
                             cloneTask[key] = this.task[key];
                         }
@@ -149,9 +125,7 @@ export default {
                 }
 
                 for (let key in this.task) {
-                    if (key != "showTime") {
                         this.task[key] = "";
-                    }
                 }
 
             } else {
