@@ -108,9 +108,15 @@
 
                     return el;
                 }
-
+                
+                // show calendar
                 if (!this.visible) {
                     this.visible = true;
+                }
+
+                // if the task-form isn't hide -> hide it
+                if (this.taskFormShow) {
+                    this.$store.commit("changeVisibility");
                 }
 
                 this.renderHead.day = empty(this.renderHead.day);
