@@ -173,6 +173,7 @@
                     this.$store.dispatch('sendDataToFB', {uid: this.uid, monthId: this.previousMonthId});
 
                     this.$store.commit('emptySlots');
+                    this.$store.commit('emptyActiveTasks');
                 }
 
                 if (this.previousMonthId === null || this.previousMonthId !== this.curMonthInfo.id) {

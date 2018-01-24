@@ -174,10 +174,14 @@ export const store = new Vuex.Store({
             }
 
             function deleteOldTasks() {
-                
+                curTime = new Date().getTime();
+
                 // 300k ms = 5 min
                 if (state.activeTasksTime[0] - curTime < 300000) {
+
+                    // del first old task
                     state.activeTasksTime.shift();
+
                     ifTasks(deleteOldTasks);
                 }
             }
@@ -200,6 +204,7 @@ export const store = new Vuex.Store({
             }
 
             deleteOldTasks();
+
             ifTasks(getTaskAlert);
         },
 

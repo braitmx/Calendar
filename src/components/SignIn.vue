@@ -10,7 +10,7 @@
             <br />
             <hr>
             <br />
-                <button type="submit">Login</button>
+            <button type="submit">Login</button>
         </form>
         <div class="success" v-if="signSuccess">Login success!</div>
         <div class="success" v-if="signError">Oops! Get an error..</div>

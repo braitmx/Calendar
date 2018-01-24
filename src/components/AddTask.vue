@@ -133,37 +133,6 @@ export default {
             }
         }
     }
-
-  /*methods: {
-             addTask: function () {
-
-                Firebase.database().ref('tasks/' + this.uid).set({
-                    data: this.data.tasks
-                });
-
-                for (let key in this.task) {
-
-                    if (key === 'period') this.task[key] = [];
-                    else this.task[key] = '';
-                }
-
-                this.$store.commit('changeVisibility');
-        },*/
-  /*created() {
-
-            const getTasks = Firebase.database().ref('tasks/' + this.uid + '/data');
-
-            getTasks.on('value', (snapshot) => {
-
-                if (snapshot.val()) {
-                    this.data.tasks = snapshot.val();
-                }
-                else {
-                    this.data.tasks = [];
-                }
-
-            });
-        } */
 };
 </script>
 
