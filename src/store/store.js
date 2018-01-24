@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
     getters: {
         fullTime: state => {
             let startTime = state.taskTime.startTime + ':00',
-                endTime = state.taskTime.startTime + ':30';
+                endTime = +state.taskTime.startTime + 4 + ':00';
 
             function addZero(time) {
                 if (time.length === 4) {

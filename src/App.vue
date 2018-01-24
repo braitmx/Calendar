@@ -56,7 +56,7 @@ body {
   width: 100%;
   height: 50px;
   background-color: rgb(104, 105, 117);
-  padding: 5px;
+  padding: 11px 5px;
   box-sizing: border-box;
 }
 
@@ -64,7 +64,7 @@ body {
     color: white;
     font-size: 18px;
     display: block;
-    margin-top: 8px;
+    margin-top: 2px;
 }
 
 button {

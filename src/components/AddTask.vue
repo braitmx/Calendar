@@ -98,6 +98,10 @@ export default {
 
                     if (this.taskTime.startTime > this.task.startTime.getHours()) {
                         alert("Error: Start-time can't be lower than default value");
+                    } else if (this.taskTime.startTime + 4 === this.task.startTime.getHours() &&
+                               this.task.startTime.getMinutes() > 0
+                    ) {
+                        alert("Error: Start-time can't be higher than End-time default value");
                     } else if ("24:00" < endTime) {
                         alert("Error: End-time can't be higher than 24");
                     } else if (this.task.endTime.getTime() - this.task.startTime.getTime() <= 0) {
