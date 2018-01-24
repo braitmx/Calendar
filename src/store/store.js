@@ -228,8 +228,6 @@ export const store = new Vuex.Store({
         },
 
         sendDataToFB(state, data) {
-            debugger;
-            console.log(this.state.slots);
 
             if (this.state.slots !== [] && this.state.activeTasksTime.length !== 0) {
                 Firebase.database().ref(data.uid + '/' + data.monthId).set({
