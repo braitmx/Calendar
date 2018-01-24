@@ -188,9 +188,6 @@
                     
                     // get task slots from FB or generate it
                     this.$store.dispatch('getDataFromFB', this.uid);    
-                } else {
-                    // push current slot to state & re-render it
-                    this.$store.commit('getCurSlot');
                 }
             }
         },
