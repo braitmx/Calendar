@@ -61,6 +61,10 @@ export const store = new Vuex.Store({
             state.slots = [];
         },
 
+        emptyActiveTasks(state) {
+            state.activeTasksTime = [];
+        },
+
         generateSlots(state) {
             // add slots to state
 
@@ -71,7 +75,7 @@ export const store = new Vuex.Store({
                 for (let j = index; j < index + 6; j++) {
 
                     if (i <= daysNumber) {
-                        slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: [] });
+                        slot.push({ id: j, startTime: sTime, endTime: sTime + 4, tasks: [0] });
 
                         sTime += 4;
                         sTime === 24 ? sTime = 0 : sTime;
@@ -122,7 +126,7 @@ export const store = new Vuex.Store({
 
             let addTask = function () {
                 state.slots[+data.i + week].forEach(function (el) {
-                     
+
                     // period not set (week === 0) - add task once  
                     // if period set (week != 0) - add task for every week: 7 days * 6 timeslots  
                     if (el.id === +data.id + week * 6) {
@@ -199,21 +203,27 @@ export const store = new Vuex.Store({
             ifTasks(getTaskAlert);
         },
 
-        setUserSlots(state, data) {
-            state.slots = data;
-        }
+        setUserSlots(state, slots) {
+            state.slots = slots;
+        },
+
+        setUserTasks(state, tasksTime) {
+            state.activeTasksTime = tasksTime;
+        } 
     },
 
     actions: {
         getDataFromFB({ commit }, uid) {
             console.log('Get data');
 
-            const getSlots = Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id + '/slots');
+            const getData = Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id);
             
-            getSlots.on('value', (snapshot) => {
-                debugger;
-                if (snapshot.val()) {
-                    commit('setUserSlots', snapshot.val());
+            getData.on('value', (snapshot) => {
+                let data = snapshot.val();
+
+                if (data) {
+                    commit('setUserSlots', data.slots);
+                    commit('setUserTasks', data.tasks);
                 } else {
 
                     // if slots in FB don't exist generate it 
@@ -231,7 +241,8 @@ export const store = new Vuex.Store({
 
             if (this.state.slots !== [] && this.state.activeTasksTime.length !== 0) {
                 Firebase.database().ref(data.uid + '/' + data.monthId).set({
-                    slots: this.state.slots
+                    slots: this.state.slots,
+                    tasks: this.state.activeTasksTime
                 });
             }
         }

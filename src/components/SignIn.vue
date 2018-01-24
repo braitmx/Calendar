@@ -47,6 +47,7 @@
                         this.show = false;
                         this.signSuccess = true;
 
+                        // redirect to calendar     
                         this.$router.push('/calendar');
                     })
                     .catch(error => {

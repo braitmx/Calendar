@@ -43,11 +43,6 @@
         <!--Calendar -->
 
         <AddTask v-show="taskFormShow"></AddTask>
-
-        <div class="showTasks">
-            <div v-for="(task, i) in data.tasks" :key="i">{{task}}</div>
-        </div>
-
     </div>
 </template>
 
@@ -75,11 +70,7 @@
                     day: []
                 },
 
-                newTask: true,
-
-                data: {
-                    tasks: []
-                }
+                newTask: true
             }
         },
 
@@ -189,13 +180,23 @@
                     // get task slots from FB or generate it
                     this.$store.dispatch('getDataFromFB', this.uid);    
                 } else {
+
                     // push current slot to state & re-render it
                     this.$store.commit('getCurSlot');
                 }
             }
         },
 
+        created() {
+
+            // redirect to sign-in if not logged    
+            if (!this.uid) {
+                this.$router.push('/sign-in');
+            }
+        },          
+
         beforeDestroy() {
+
             // send slots to FB
             this.$store.dispatch('sendDataToFB', this.uid);
         }

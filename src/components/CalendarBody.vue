@@ -8,13 +8,12 @@
                 <div class="calendar__day-col" v-for="(slot, i) in curSlot" :data-index="curInterval + i - 1" :key="i">
                     <template v-for="item in slot">    
                         <div class="calendar__day" v-if="!item.disable" :id="item.id" @click.prevent="addTaskToSlot($event, item.startTime)" :key="item.id">
-                            <div :class="['calendar__event', taskColor[task.category]]" v-for="(task, i) in item.tasks" v-if="item.tasks" :key="i">
+                            <div :class="['calendar__event', taskColor[task.category]]" v-for="(task, i) in item.tasks" v-if="i !== 0 && item.tasks[1]" :key="i">
                                 {{task.desc}} <br /> 
                                 <span class="calendar__event-time">{{task.fullTime}}</span>
                             </div>
                         </div>
-                        <div class="calendar__day--disabled" v-else :id="item.id" :key="item.id">
-                        </div>
+                        <div class="calendar__day--disabled" v-else :id="item.id" :key="item.id"></div>
                     </template>  
                 </div>
             </div>
