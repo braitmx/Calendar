@@ -53,7 +53,6 @@
 </script>
 
 <style scoped>
-
 .reg {
     height: 200px;
 }

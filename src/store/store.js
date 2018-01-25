@@ -19,7 +19,9 @@ export const store = new Vuex.Store({
             startTime: '',
             endTime: ''
         },
-        activeTasksTime: []
+
+        activeTasksTime: [],
+        currentTaskStartTime: null
     },
 
     getters: {
@@ -131,6 +133,16 @@ export const store = new Vuex.Store({
                     // if period set (week != 0) - add task for every week: 7 days * 6 timeslots  
                     if (el.id === +data.id + week * 6) {
                         el.tasks.push(data.task);
+
+                        if (week !== 0) {
+
+                            // 864 - 1 day in ms
+                            // add 7 days  (period) 
+                            state.currentTaskStartTime += 7 * 86400000;
+                            console.log(new Date(state.currentTaskStartTime));
+                             // push next taskStartTime in activeTasksTime
+                            state.activeTasksTime.push(state.currentTaskStartTime);
+                        }
                     }
                 });
             };
@@ -152,7 +164,10 @@ export const store = new Vuex.Store({
 
         addActiveTasksTime(state, time) {
 
-            // add new task start time
+            // save current task start time
+            state.currentTaskStartTime = time;
+
+            // add new task start time to ActiveTasks
             state.activeTasksTime.push(time);
 
             function compareNumbers(a, b) {
