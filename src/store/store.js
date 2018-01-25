@@ -139,7 +139,7 @@ export const store = new Vuex.Store({
                             // 864 - 1 day in ms
                             // add 7 days  (period) 
                             state.currentTaskStartTime += 7 * 86400000;
-                            console.log(new Date(state.currentTaskStartTime));
+    
                              // push next taskStartTime in activeTasksTime
                             state.activeTasksTime.push(state.currentTaskStartTime);
                         }
