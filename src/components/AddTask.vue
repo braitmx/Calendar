@@ -1,35 +1,34 @@
 <template>
-    <form class="add-task">
-        <label for="desc">Description:</label>
-        <br />
-        <input type="text" v-model="task.desc" maxlength="17" required>
-        <br /><br />
-        <label for="startTime">StartTime:</label>
-        <input type="text" :placeholder="fullTime.sTime" v-model="task.startTime" maxlength="5" required>
-        <br />
-        <label for="endTime">EndTime:</label>
-        <input type="text" :placeholder="fullTime.eTime" v-model="task.endTime" maxlength="5" required>
-        <br />
-        <label for="period">Period:</label>
-        <br />
-        <select name="period" v-model="task.period">
-            <option value="" selected="selected">-</option>
-            <option value="current">Current day</option>
-        </select>
-        <br /><br />
-        <label for="category">Category:</label>
-        <select name="category" v-model="task.category" required>
-            <option value="Home">Home</option>
-            <option value="Job">Job</option>
-            <option value="Rest">Rest</option>
-        </select>
-        <br /><br />
+    <form class="addTask">
+        <h3 class="addTask__title">Add new task</h3>    
+        <label class="addTask__desc-label" for="desc">Description:</label>
+        <input class="addTask__desc" type="text" v-model="task.desc" maxlength="17" required>
 
-        <button @click.prevent="addTask">add</button>
+        <label class="addTask__start-label" for="startTime">StartTime:</label>
+        <input class="addTask__start" type="text" :placeholder="fullTime.sTime" v-model="task.startTime" maxlength="5" required>
+
+        <label class="addTask__end-label" for="endTime">EndTime:</label>
+        <input class="addTask__end" type="text" :placeholder="fullTime.eTime" v-model="task.endTime" maxlength="5" required>
+        
+        <label class="addTask__period-label" for="period">Period:</label>
+        <select class="addTask__period" name="period" v-model="task.period">
+            <option class="addTask__period-val" value="" selected="selected">-</option>
+            <option class="addTask__period-val" value="current">Current day</option>
+        </select>
+
+        <label class="addTask__category-label" for="category">Category:</label>
+        <select class="addTask__category" name="category" v-model="task.category" required>
+            <option class="addTask__category-val" value="Home">Home</option>
+            <option class="addTask__category-val" value="Job">Job</option>
+            <option class="addTask__category-val" value="Rest">Rest</option>
+        </select>
+
+        <button class="addTask__submit" @click.prevent="addTask">Add</button>
     </form>
 </template>
 
 <script>
+
 import Firebase from "firebase";
 
 export default {
@@ -141,5 +140,27 @@ export default {
 </script>
 
 <style scoped>
+
+.addTask {
+    height: 130px;
+}
+
+.addTask__title {
+    text-align: center;
+}
+
+.addTask__desc, .addTask__start, .addTask__end {
+    height: 20px;
+    border-radius: 5px;
+    margin-right: 15px;
+    font-size: 15px;
+}
+
+.addTask__period, .addTask__category {
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 15px;
+    font-size: 15px;
+}
 
 </style>

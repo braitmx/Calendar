@@ -1,28 +1,27 @@
 <template>
     <div>
         <h1>Registration</h1>
-        <form class="regForm" @submit.prevent="registerUser">
-            <label for="email">Email:</label>
-            <input type="email" placeholder="Enter Email:" required v-model="user.email">
+        <form class="reg" @submit.prevent="registerUser">
+            <label class="reg__email-l" for="email">Email:</label>
+            <input class="reg__email" type="email" placeholder="Enter Email:" required v-model="user.email">
             <br />
-            <label for="password">Password:</label>
-            <input type="password" placeholder="Enter password:" required v-model="user.password">
+            <label class="reg__pass-l" for="password">Password:</label>
+            <input class="reg__pass" type="password" placeholder="Enter password:" required v-model="user.password">
             <br />
-            <label for="password2">Confirm password:</label>
-            <input type="password" placeholder="Repeat password:" required v-model="user.confirmPassword">
-            <br />
+            <label class="reg__pass2-l" for="password2">Confirm password:</label>
+            <input class="reg__pass2" type="password" placeholder="Repeat password:" required v-model="user.confirmPassword">
             <hr>
-            <div class="alert" v-show="error">
-                Passwords passwords not equal or incorrect!
+            <div class="reg__alert" v-show="error">
+                Passwords not equal or incorrect!
             </div>
-            <br />
-            <button type="submit">Registration</button>
+
+            <button class="reg__submit" type="submit">Registration</button>
         </form>
     </div>
 </template>
 
 <script>
-    import Firebase from 'firebase'
+    import Firebase from 'firebase';
     
     export default {
         data() {
@@ -55,12 +54,22 @@
 
 <style scoped>
 
-input {
-    margin-bottom: 15px;
+.reg {
+    height: 200px;
 }
 
-.alert {
+.reg__email, .reg__pass, .reg__pass2 {
+    margin-bottom: 15px;
+    height: 20px;
+    border-radius: 5px;
+} 
+
+.reg__alert {
     font-weight: bold;
     color: red;
+}
+
+.reg__submit {
+    margin-top: 15px;
 }
 </style>

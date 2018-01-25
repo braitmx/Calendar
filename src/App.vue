@@ -23,10 +23,10 @@
 
 <script>
 
-    import SigiUp from './components/SignUp.vue'
-    import SigiIn from './components/SignIn.vue'
-    import MainPage from './components/MainPage.vue'
-    import AddTask from './components/AddTask.vue'
+    import SigiUp from './components/SignUp.vue';
+    import SigiIn from './components/SignIn.vue';
+    import MainPage from './components/MainPage.vue';
+    import AddTask from './components/AddTask.vue';
 
     export default {
         data() {
@@ -78,6 +78,7 @@ button {
 }
 
 .container {
+    background: #ebebeb;
     padding: 5px;
 }
 </style>

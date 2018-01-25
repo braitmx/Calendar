@@ -219,7 +219,6 @@ export const store = new Vuex.Store({
 
     actions: {
         getDataFromFB({ commit }, uid) {
-            console.log('Get data');
 
             const getData = Firebase.database().ref(uid + '/' + this.state.curMonthInfo.id);
             

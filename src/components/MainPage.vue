@@ -2,26 +2,23 @@
     <div>
         <h1>Calendar</h1>
 
-        <!--Select Dates -->
-        <form class="selectDates">
-            <label for="month">Month:</label>
-            <br />
-            <select name="month" v-model="curMonth">
+        <!--Set Dates -->
+        <form class="setDates">
+            <label class="setDates__month-l" for="month">Month:</label>
+            <select class="setDates__month" name="month" v-model="curMonth">
                 <option v-for="month in mData" :value="month.id" :key="month.id">{{month.name}}</option>
             </select>
-            <br /><br />
-            <label for="dateInterval">Date interval:</label>
-            <br />
-            <select name="dateInterval" v-model="dateInterval">
-                <option value="1" selected>1-7</option>
-                <option value="8">8-14</option>
-                <option value="15">15-21</option>
-                <option value="22">22-28</option>
-                <option value="29">29+</option>
+            <label class="setDates__int-l" for="dateInterval">Date interval:</label>
+            <select class="setDates__int" name="dateInterval" v-model="dateInterval">
+                <option class="setDates__int-val" value="1" selected>1-7</option>
+                <option class="setDates__int-val" value="8">8-14</option>
+                <option class="setDates__int-val" value="15">15-21</option>
+                <option class="setDates__int-val" value="22">22-28</option>
+                <option class="setDates__int-val" value="29">29+</option>
             </select>
-            <button @click.prevent="dateChange">Ok</button>
+            <button class="setDates__submit" @click.prevent="dateChange">Ok</button>
         </form>
-        <!--Select Dates -->
+        <!--Set Dates -->
 
         <!--Calendar -->
         <div class="calendar" v-show="visible">
@@ -48,11 +45,11 @@
 
 <script>
 
-    import Firebase from 'firebase'
-    import { monthsData } from '../helpers/date'
-    import { daysData } from '../helpers/date'
-    import CalendarBody from './CalendarBody.vue'
-    import AddTask from './AddTask.vue'
+    import Firebase from 'firebase';
+    import { monthsData } from '../helpers/date';
+    import { daysData } from '../helpers/date';
+    import CalendarBody from './CalendarBody.vue';
+    import AddTask from './AddTask.vue';
 
     export default {
         data() {
@@ -211,13 +208,22 @@
 </script>
 
 <style scoped>
-input {
-  margin-bottom: 20px;
+
+.setDates {
+    background: #ebebeb;
+    margin-bottom: 20px;
 }
+
+.setDates__month, .setDates__int {
+    margin-right: 15px;
+    height: 27px;
+    border-radius: 3px;
+    font-size: 15px;
+} 
 
 .calendar {
   width: 100%;
-  height: 900px;
+  height: 820px;
 }
 
 .calendar__head {
