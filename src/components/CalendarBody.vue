@@ -60,17 +60,22 @@ export default {
 
     methods: {
         addTaskToSlot: function(e, sTime) {
-            let data = {
-                id: e.target.id,
-                i: e.target.parentElement.dataset.index,
-                task: {}
-            };
 
-            this.$store.commit("getTaskTime", {startTime: sTime, endTime: ''});  
-            this.$store.commit("addTaskElToStore", data);
+            // add new task, if tasks count < 4  
+            if (e.target.children.length < 4) {
 
-            if (!this.taskFormShow) {
-                this.$store.commit("changeVisibility");
+                let data = {
+                    id: e.target.id,
+                    i: e.target.parentElement.dataset.index,
+                    task: {}
+                };
+
+                this.$store.commit("getTaskTime", {startTime: sTime, endTime: ''});  
+                this.$store.commit("addTaskElToStore", data);
+
+                if (!this.taskFormShow) {
+                    this.$store.commit("changeVisibility");
+                }
             }
         }
     }
